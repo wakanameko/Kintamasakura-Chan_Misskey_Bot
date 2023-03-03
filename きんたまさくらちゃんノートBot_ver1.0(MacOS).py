@@ -38,6 +38,8 @@ Menubaa = tk.Menu(MainWindow)
 MainWindow.config(menu=Menubaa)
 MainWindow.iconphoto(False, tk.PhotoImage(file="きんたまさくらちゃん.png"))
 
+verK = tk.BooleanVar()
+
 class Application(tk.Frame):
     def drawLabelPngImg(self):
         global pngImg
@@ -45,7 +47,8 @@ class Application(tk.Frame):
         label = tk.Label(dlg_modeless, width=100,height=100,image=pngImg)
         label.pack()
 
-img = ImageTk.PhotoImage(Image.open("きんたまさくらちゃんsmall.png"))
+#img = ImageTk.PhotoImage(Image.open("きんたまさくらちゃんsmall.png"))
+imgM = ImageTk.PhotoImage(Image.open("きんたまさくらちゃんTop.png"))
 
 ### Load UserData.txt ###
 if(os.path.isfile('UserData.txt')):
@@ -93,7 +96,7 @@ def NNow():
     txt_Token_get = (txt_Token.get())
     api = Misskey(txt_ins_get)
     api.token = txt_Token_get
-    if verK == True:
+    if chkVK.get() == True:
         api.notes_create(text="たまさくらちゃんの金玉、きんたまさくらちゃん")
     else:
         api.notes_create(text="たまさくらちゃんの金玉　きんたまさくらちゃん")
@@ -101,7 +104,7 @@ def NNow():
 
 #Widgeds
 Label_wlcm = tk.Label(MainWindow, text = f"{AppName}", font = ("normal", 18, "bold"))
-Label_icon = tk.Label(MainWindow, image = img)
+Label_iconM = tk.Label(MainWindow, image = imgM)
 Label_Login = tk.Label(MainWindow, text = "ログイン:", font = ("normal", 14, "bold"))
 Label_ins = tk.Label(MainWindow, text = "インスタンス(Misskey.io等)")
 Label_token = tk.Label(MainWindow, text = "アクセストークン")
@@ -114,8 +117,8 @@ if(os.path.isfile('UserData.txt')):
     txt_Token.insert(tk.END, TokenData)
 button_SaveInfo = tk.Button(MainWindow, text = "情報を保存", command = SaveInfo, width = 9)
 Label_Note = tk.Label(MainWindow, text = "ノート:", font = ("normal", 14, "bold"))
-varK = tk.BooleanVar()
-chk_K = tkinter.Checkbutton(text='句読点を付ける', variable = varK)
+chkVK = tk.BooleanVar()
+chk_K = tk.Checkbutton(MainWindow, text = '句読点を使う', variable = chkVK)
 button_NNow = tk.Button(MainWindow, text = "ノート", command = NNow, width = 9)
 
 #MenuBar
@@ -134,7 +137,7 @@ menu_Note.add_command(label = 'ノート', command = NNow)
 
 #Layouts
 Label_wlcm.pack()
-Label_icon.pack(anchor = tk.W, padx = 15)
+Label_iconM.pack(anchor = tk.W, padx = 15)
 Label_Login.pack(anchor = tk.W, padx = 15, pady = 0)
 Label_ins.pack(anchor = tk.W, padx = 15, pady = 0)
 txt_ins.pack(anchor = tk.E, padx = 15, pady = 0)
